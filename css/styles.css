@@ -1,0 +1,350 @@
+@import url('https://fonts.cdnfonts.com/css/faculty-glyphic');
+
+:root {
+    --primary-color: #ffd1dd;
+    --secondary-color: white;
+    --tertiary-color: #93c082;
+    --flower-orange-start: #ff4d00;
+    --flower-orange-end: #ff8533;
+    --flower-yellow-start: #ffcc00;
+    --flower-yellow-end: #ffeb99;
+    --flower-red-start: #ff0000;
+    --flower-red-end: #ff4d4d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Mali', cursive;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: var(--primary-color) !important;  /* Force light pink */
+    transition: background-color 0.5s ease;
+}
+
+/* Section Management */
+.section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease, background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section.active {
+    opacity: 1;
+    transform: scale(1);
+    display: flex !important;
+    z-index: 10;
+}
+
+/* Initial section should be visible */
+#sudokuSection {
+    display: flex;
+    opacity: 1;
+    background-color: var(--primary-color);
+}
+
+/* Audio Control */
+.audio-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#audioToggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+#audioToggle:hover {
+    transform: scale(1.1);
+}
+
+/* Custom Cursor */
+.cursor {
+    position: fixed;
+    width: 35px; /* Slightly larger cursor */
+    height: 35px;
+    pointer-events: none;
+    z-index: 10000; /* Increased z-index to stay above overlay */
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+}
+
+.cursor svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
+}
+
+.cursor svg path {
+    fill: white;
+    filter: url(#glow);
+}
+
+.cursor-trail {
+    position: fixed;
+    width: 12px; /* Larger trails */
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.9; /* More visible */
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.8),
+        0 0 30px rgba(255, 209, 221, 0.6);
+    z-index: 9999; /* Increased z-index */
+    mix-blend-mode: screen;
+}
+
+/* Add this if you want extra glow during movement */
+.cursor.moving {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 1));
+}
+
+/* Particle Effects */
+.particle {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.8;
+    z-index: 9998;
+}
+
+/* Loading State */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+.loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Common Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes cursorPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+    50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 1));
+    }
+}
+
+@keyframes trailFade {
+    0% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(0.3);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+    }
+}
+
+@keyframes fadeTrail {
+    0% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+}
+
+@keyframes trailFadeOut {
+    0% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section {
+        padding: 20px;
+    }
+
+    #audioToggle {
+        font-size: 20px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #audioToggle {
+        font-size: 18px;
+        padding: 6px;
+    }
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.no-cursor {
+    cursor: none;
+}
+
+/* Prevent text selection */
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Ensure sections are properly layered */
+#sudokuSection { z-index: 2; }
+#transitionSection { z-index: 3; }
+#valentineSection { z-index: 4; }
+#flowerSection { z-index: 5; }
+
+/* Debug styles */
+.debug-outline * {
+    outline: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+/* Flower Section Transitions */
+.flower-active {
+    background: #080f1a !important;
+    transition: background-color 1.5s ease;
+}
+
+.night {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+/* Glow Effects */
+.flower__light {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+}
+
+.flower__white-circle {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Section States */
+body.transition-active,
+body.valentine-active,
+body.flower-active {
+    background-color: #122139 !important;
+}
+
+/* Night sky styling - Unified across sections */
+.night-sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #122139;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Additional gradient overlay */
+.night-sky::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(18, 33, 57, 0) 0%,
+        rgba(18, 33, 57, 0.8) 100%
+    );
+    z-index: 0;
+}
+
+/* Flower section specific */
+#flowerSection {
+    background-color: #122139;
+}
+
+#flowerSection.section {
+    background: #122139;
+    opacity: 0;
+    will-change: opacity;
+}
+
+.flower {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+body:not(.not-loaded) .flower {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Ensure proper stacking */
+body.transition-active .stars-container,
+body.valentine-active .stars-container {
+    z-index: 5;
+    opacity: 1;
+}
+
+/* Ensure cursor effects work across all sections */
+#transitionSection, 
+#valentineSection, 
+#flowerSection {
+    pointer-events: auto;
+}

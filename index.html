@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤍</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/sudoku.css">
+    <link rel="stylesheet" href="css/transition.css">
+    <link rel="stylesheet" href="css/valentine.css">
+    <link rel="stylesheet" href="css/flower.css">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body class="not-loaded no-cursor">
+    <!-- Audio Control -->
+    <div class="audio-control">
+        <button id="audioToggle" aria-label="Toggle Audio">🔊</button>
+    </div>
+
+    <!-- Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Sudoku Section -->
+    <section id="sudokuSection" class="section">
+        <div class="sudoku-container">
+            <div class="sudoku-grid"></div>
+            <button id="letsGoBtn" class="lets-go-btn" disabled>LET'S GO</button>
+        </div>
+    </section>
+
+    <!-- Transition Section -->
+    <section id="transitionSection" class="section">
+        <div class="night-sky">
+            <div class="stars"></div>
+            <div class="moon"></div>
+            <div class="floating-hearts"></div>
+        </div>
+    </section>
+
+    <!-- Valentine Question Section -->
+    <section id="valentineSection" class="section">
+        <div class="valentine-container">
+            <div class="typewriter-text"></div>
+            <div class="button-container">
+                <button class="lets-go-btn yes-btn">Yes</button>
+                <button class="lets-go-btn no-btn">No</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flower Section -->
+    <section id="flowerSection" class="section">
+        <div class="flower-text"> <3 </div>
+        <div class="iframe-overlay"></div>
+        <iframe 
+            src="https://dearchivist.github.io/css-nika-3gerberas/" 
+            style="width: 100vw; height: 100vh; border: none;">
+        </iframe>
+    </section>
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

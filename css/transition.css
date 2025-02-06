@@ -1,0 +1,390 @@
+/* Night Sky */
+.night-sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #0a0a2a 0%, #122139 100%);
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+#transitionSection.active .night-sky {
+    opacity: 1;
+}
+
+/* Stars */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    background-image: radial-gradient(circle at center, white 0%, transparent 10%);
+    background-size: 3px 3px;
+    background-repeat: repeat;
+    opacity: 0;
+    animation: fadeIn 2s ease-out forwards;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--twinkle-duration, 2s) infinite ease-in-out;
+    box-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.4);
+    z-index: 0;
+}
+
+/* Different star sizes */
+.star--small {
+    width: 2px;
+    height: 2px;
+    --twinkle-duration: 3s;
+}
+
+.star--medium {
+    width: 3px;
+    height: 3px;
+    --twinkle-duration: 4s;
+}
+
+.star--large {
+    width: 4px;
+    height: 4px;
+    --twinkle-duration: 5s;
+}
+
+@keyframes twinkle {
+    0%, 100% { 
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Add Shooting Stars */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+    transform-origin: left;
+    transform: translateX(0);
+}
+
+/* Moon */
+.moon {
+    position: absolute;
+    top: -100px;
+    right: 50px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at center, white, #ffd1dd);
+    border-radius: 50%;
+    box-shadow: 0 0 50px 20px rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    filter: blur(1px);
+    transform: translateY(-100%);
+    transition: all 2s ease;
+    will-change: transform, opacity;
+    animation: moonRise 3s ease-out forwards;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+#transitionSection.active .moon {
+    opacity: 1;
+    transform: translateY(100px);
+}
+
+/* Floating Hearts */
+.floating-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.heart {
+    position: absolute;
+    font-size: 24px;
+    color: var(--primary-color);
+    opacity: 0;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Particle Effects */
+.particle-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.transition-particle {
+    position: absolute;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.grid-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    z-index: 100;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    will-change: transform, opacity;
+}
+
+.grid-star {
+    position: fixed;
+    width: 7px;  /* Slightly larger */
+    height: 7px;
+    background: #fff;
+    border-radius: 50%;
+    transform-origin: center;
+    opacity: 0.95;  /* Increased opacity */
+    box-shadow: 
+        0 0 15px rgba(255,255,255,0.9),
+        0 0 30px rgba(255,255,255,0.7),
+        0 0 45px rgba(255,255,255,0.5),
+        0 0 60px rgba(255,255,255,0.3);
+    z-index: 100;
+    will-change: transform;
+    mix-blend-mode: screen;  /* Added for extra glow */
+}
+
+.twinkling-star {
+    position: fixed;
+    background: white;
+    border-radius: 50%;
+    will-change: transform, opacity;
+    pointer-events: none;
+    z-index: 100;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.twinkling-star--small {
+    width: 2px;
+    height: 2px;
+    box-shadow: 0 0 4px white;
+}
+
+.twinkling-star--medium {
+    width: 3px;
+    height: 3px;
+    box-shadow: 0 0 6px white;
+}
+
+.twinkling-star--large {
+    width: 4px;
+    height: 4px;
+    box-shadow: 0 0 8px white;
+}
+
+/* Different star sizes */
+.twinkling-star:nth-child(3n) {
+    width: 3px;
+    height: 3px;
+}
+
+.twinkling-star:nth-child(3n+1) {
+    width: 5px;
+    height: 5px;
+}
+
+.twinkling-star:nth-child(3n+2) {
+    width: 4px;
+    height: 4px;
+}
+
+/* Add different sizes and animation delays */
+.twinkling-star:nth-child(3n) {
+    width: 2px;
+    height: 2px;
+    animation-delay: 0.3s;
+}
+
+.twinkling-star:nth-child(3n+1) {
+    width: 4px;
+    height: 4px;
+    animation-delay: 0.6s;
+}
+
+.twinkling-star:nth-child(3n+2) {
+    width: 3px;
+    height: 3px;
+    animation-delay: 0.9s;
+}
+
+/* Animations */
+@keyframes float {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes implode {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Transition Effects */
+.fade-in {
+    animation: fadeIn 1s ease forwards;
+}
+
+.fade-out {
+    animation: fadeOut 1s ease forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .moon {
+        width: 80px;
+        height: 80px;
+        right: 30px;
+    }
+
+    .heart {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .moon {
+        width: 60px;
+        height: 60px;
+        right: 20px;
+    }
+
+    .heart {
+        font-size: 16px;
+    }
+}
+
+/* Stars Container */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    will-change: transform, opacity;
+    overflow: visible;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Ensure stars are visible during transition */
+body.valentine-active .stars-container {
+    z-index: 100;
+}
+
+/* Override any conflicting transform properties */
+.twinkling-star.moving-up {
+    transition: transform 0.8s cubic-bezier(0.2, 0, 0.8, 1);
+}
+
+/* Override any conflicting z-index */
+#valentineSection {
+    z-index: 4 !important;
+}
+
+#flowerSection {
+    z-index: 6 !important;
+}
+
+/* Use more efficient heart rendering */
+.floating-heart {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    clip-path: path('M5,0 A2.5,2.5,0,0,1,0,2.5 A2.5,2.5,0,0,1,-5,0 A5,5,0,0,1,5,0');
+    will-change: transform;
+    contain: layout style paint;
+}
+
+/* Use CSS custom properties for repeated values */
+:root {
+    --transition-duration: 0.8s;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Optimize animations */
+@keyframes moonRise {
+    from {
+        transform: translate3d(0, 100vh, 0);
+        opacity: 0;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
