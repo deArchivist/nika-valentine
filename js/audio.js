@@ -1,12 +1,13 @@
 class AudioController {
     constructor() {
-        this.backgroundMusic = new Audio('/assets/audio/background-music.mp3');
-        this.buttonSound = new Audio('/assets/effect/button.wav');
-        this.hoverSound = new Audio('/assets/effect/hover.wav');
-        this.yaySound = new Audio('/assets/effect/yay.wav');  // Add yay sound
-        this.twinkleSound = new Audio('/assets/effect/twinkle.mp3');
-        this.shimmerSound = new Audio('/assets/effect/nature-shimmer.wav');
-        this.plantRustlingSound = new Audio('/assets/effect/plant-rustling.wav');
+        // Update paths to be relative to repository root
+        this.backgroundMusic = new Audio('./assets/audio/background-music.mp3');
+        this.buttonSound = new Audio('./assets/effect/button.wav');
+        this.hoverSound = new Audio('./assets/effect/hover.wav');
+        this.yaySound = new Audio('./assets/effect/yay.wav');  // Add yay sound
+        this.twinkleSound = new Audio('./assets/effect/twinkle.mp3');
+        this.shimmerSound = new Audio('./assets/effect/nature-shimmer.wav');
+        this.plantRustlingSound = new Audio('./assets/effect/plant-rustling.wav');
         
         this.backgroundMusic.loop = true;
         this.isPlaying = false;
@@ -24,9 +25,9 @@ class AudioController {
         this.lastHoverTime = 0;
         this.hoverDelay = 100; // Minimum delay between hover sounds in milliseconds
 
-        // Create a pool of button sounds
+        // Create a pool of button sounds with correct paths
         this.buttonSoundPool = Array(5).fill(null).map(() => {
-            const sound = new Audio('/assets/effect/button.wav');
+            const sound = new Audio('./assets/effect/button.wav');
             sound.volume = 0.3;
             return sound;
         });
