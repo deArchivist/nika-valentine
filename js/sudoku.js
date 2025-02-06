@@ -173,12 +173,11 @@ class SudokuGame {
             return;
         }
 
-        // For testing: enable button immediately
-        button.disabled = false;
+        // Start with button disabled
+        button.disabled = true;
 
         button.addEventListener('click', () => {
             console.log('Lets Go clicked');
-            // For testing: always trigger transition
             import('./state.js').then(({ default: stateManager }) => {
                 stateManager.setCondition('puzzleComplete');
                 this.explodeToParticles();
@@ -189,18 +188,21 @@ class SudokuGame {
     }
 
     handleInput(num) {
-        const row = parseInt(this.selectedCell.dataset.row);
-        const col = parseInt(this.selectedCell.dataset.col);
-
+        if (!this.selectedCell) return;
+        
         if (num === 0) {
             this.selectedCell.textContent = '';
         } else {
-            // Allow any input, remove validation check
             this.selectedCell.textContent = num;
         }
 
-        // Still check if puzzle is correct after input
-        if (this.isPuzzleCorrect()) {
+        // Add console log to debug
+        console.log('Checking puzzle correctness...');
+        const isCorrect = this.isPuzzleCorrect();
+        console.log('Puzzle correct:', isCorrect);
+
+        if (isCorrect) {
+            console.log('Enabling button...');
             this.enableLetsGoButton();
         } else {
             document.getElementById('letsGoBtn').disabled = true;
@@ -269,6 +271,8 @@ class SudokuGame {
         for (let row = 0; row < 9; row++) {
             for (let col = 0; col < 9; col++) {
                 const value = this.getCellValue(row, col);
+                // Add debug logging
+                console.log(`Checking cell [${row},${col}]: ${value} vs ${this.solution[row][col]}`);
                 if (value === 0) return false;
                 if (value !== this.solution[row][col]) return false;
             }
@@ -281,6 +285,8 @@ class SudokuGame {
         if (button) {
             button.disabled = false;
             button.classList.add('active');
+            // Add visual feedback
+            console.log('Button enabled!');
         }
     }
 
